@@ -9,9 +9,13 @@
 对比学习的 loss 是上两个 loss 加权和。
 
 学习过程
+
 采用课程学习（curriculum learning）的方法（从简单的任务开始，逐渐增加任务的难度），采用的是 SRM（一种 data augmentation for RL ?）+ randomly overlay
+
 此外，还通过添加 STN 来增加位置空间的信息
 
 实验
+
 generalize：视角不同、环境 setting 不同、使用硬件不同
+
 abaltion：去掉对比学习、去掉 STN、将对比学习换成 TCN
