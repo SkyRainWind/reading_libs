@@ -1,4 +1,4 @@
-简要写写。
+NIPS'17
 
 transformer 两大部分：encoder、decoder，输入的是若干个向量。对于每个向量：利用一个 FFN 求出对应的 $q,k,v$ 向量，key-values pair 做点乘得到 attention 向量，需要 scale 一下（除以 $\sqrt{d_k}$），再和 $q$ 做点乘，add&norm 之后通过 FFN。
 
