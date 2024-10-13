@@ -7,3 +7,4 @@
 - CoCLR 一种对比学习方法的改进，用于处理多模态之间的问题。核心是不仅使用本样本的另一模态作为正样本，还使用某些其它样本作为正样本，选取方式就通过某一模态下最相似的前 K 个样本 [link](libs/CoCLR.md)
 - M3L visuo-tactile 的 baseline，基于 MAE 的视觉、触觉融合框架 [link](libs/M3L.md)
 - CLIP 多模态对比学习 [link](libs/CLIP.md)
+- 一些 fusion 的调研 for better leverage depth map [link](libs/bet.md)
