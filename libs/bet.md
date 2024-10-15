@@ -50,3 +50,11 @@ $\beta, \gamma$ 本应由两个不同的网络产生，代表仿射变换（Feat
 ![alt text](image-8.png)
 
 由于本文比较新（2406），因此比较的 baseline 也可以研究一下，如 VQ-BET、diffusion policy。
+
+## DI2
+
+arxiv 2408.05107
+
+To be read: To enhance unimodal perception through multimodal integration, two prominent strategies have emerged. These are cross-modal knowledge distillation [5, 6] and missing modality learning [7, 8]. The former approach uses a multi-modal teacher to distill cross-modal knowledge into an unimodal model. The latter method employs data augmentation across different modalities to encourage robust model learning. Despite the success of these methods in various perception tasks [9, 10], their application to fine-grained robotic manipulation policy learning is challenging. This difficulty arises from sequential accumulative errors in multimodal perception prediction.
+
+和 fusion 关系不大。概括来说是利用 RGB 来生成了对应的 depth map，利用 RGB、depth、text，通过 VLM 来得到 fused feature。生成 depth 是本文主要的卖点，有两个部分，DCM & DAC。前者构建了若干个 learnable token，与 rgb token 结合，分别为 Q、K/V，通入 attention 层，再连一个 FFN（FFN 是与 RNN 相对的概念，在 FFN 中梯度可以根据反向传播直观计算，而在 RNN 中由于存在回溯，可能导致无穷次计算，MLP 指的是一层神经元分别与下一层的所有神经元相连。这里 FFN 和 MLP 区别不大）得到 depth。由于时间上可能会累积误差，因此还使用了 DAC 来降低误差。DAC 提供了一个 codebook，每次求出 depth feature 之后在 book 中找到离着最近的 feature（梯度如何回传，因为这里使用的相当于是 argmin？）。不难发现这相当于就是对 depth 做了次离散化。
