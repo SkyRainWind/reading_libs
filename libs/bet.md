@@ -16,7 +16,7 @@ motivation：过去的 sota 很难处理多模式多种行为的策略，容易�
 ## PRELUDE
 arxiv 2209.09233
 
-为了让 locomotion 表现的更好提出的。将机器狗的运动过程分为了两个部分进行训练。首先通过模仿学习让机器人学会 navigation，也就是找到一条路能够通行（称之为 high-level 的策略 $\pi_H$），接着使用强化学习让机器人学会 走 这个 low-level 动作 $\pi_L$。这样结合概率知识，我们需要学习的策略可以写成：$\pi(a_t|s_t)=\pi_L(a_t|u_t,s_t)\pi_H(u_t|s_t)$
+为了让 locomotion 表现的更好提出的。将机器狗的运动过程分为了两个部分进行训练。首先通过模仿学习让机器人学会 navigation，也就是找到一条路能够通行（称之为 high-level 的策略 $\pi_H$），接着使用强化学习让机器人学会 走 这个 low-level 动作 $\pi_L$。这样结合概率知识，我们需要学习的策略可以写成： $\pi(a_t|s_t)=\pi_L(a_t|u_t,s_t)\pi_H(u_t|s_t)$
 
 第一个部分，high-level navigation，使用 BC 进行 IL，同时使用 RNN 来融合不同模态。这里使用的模态共有 3 种：RGB、Depth、Heading Direction（机器人运动的方向），其中前两个分别通过 encoder，三个模态通过 RNN 进行融合。此外，由于专家示范中可能存在噪声，使用 Guassian Mixture Model(GMM) 来减弱。
 
@@ -31,7 +31,7 @@ arxiv 1709.07871
 
 CV 部分使用一个深层的网络结构。先通过一个 CNN，接着再串上若干个 res block。每个 res block 除了基础的 CNN 和 BN 之外，还有一层 FiLM，做了一个仿射变换。
 
-$ FiLM(F_{i,c}|γ_{i,c}, β_{i,c}) = γ_{i,c}F_{i,c} + β_{i,c} $
+$$FiLM(F_{i,c}|γ_{i,c}, β_{i,c}) = γ_{i,c}F_{i,c} + β_{i,c}$$
 
 $\beta, \gamma$ 本应由两个不同的网络产生，代表仿射变换（Feature-wise affine transformation）的 scaling 和 shifting，但是发现 share parameters 效果更好，就换成了一个网络产生两个值。
 
