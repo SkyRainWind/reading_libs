@@ -8,3 +8,4 @@
 - M3L visuo-tactile 的 baseline，基于 MAE 的视觉、触觉融合框架 [link](libs/M3L.md)
 - CLIP 多模态对比学习 [link](libs/CLIP.md)
 - 一些 fusion 的调研 for better leverage depth map [link](libs/bet.md)
+- diffusion policy [link](libs/dp.md)
