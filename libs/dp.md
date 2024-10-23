@@ -35,3 +35,13 @@ transformer-based model 也是本文提出的卖点之一，具体来说和 [BeT
 使用的 visual encoder：resnet-18+两个 trick: 1. 不是使用的全局 pooling，而是 spatial pooling 用于保存空间的局部信息 2. 将 batchnorm 换成 groupnorm
 
 DDPM 中的和 noise 有关的参数是 scheduler 的，最后选择了 Square Cosine Schedule。
+
+### 读代码
+
+以 ./diffusion_policy/policy/diffusion_unet_image_policy.py 为例，考察一下 CNN-based model 的运行过程。
+
+`compute_loss`：求 trajectory 中通过一直加 noise 来更新噪音预测函数 $\epsilon^k$，具体来说 loss 就是加的噪音和 $\epsilon$ 预测出的噪音的 MSE。代码中 $\epsilon$ 就是 `self.model`。需要注意的一点是，`self.model` 除了喂 已经添加上噪音的 trajectory、当前的 timestep 之外，还添加了 global_cond，而这个是由当前 obs（即 image） 经过 obs_encoder 提取 feature 之后得到的，这里选用的 `self.model` 的结构是 ConditionalUnet1D，而在 ConditionalUnet1D 中，整体的结构和大小 和 U-net 类似，但是每一个块中，采用了 ConditionalResidualBlock1D，这里每个小 Block 中除了使用 Conv1d 来提取信息之外，还使用了 FiLM-layer，具体来说，输入 (x, cond)，那么输出的是 两层网络处理 x，且在中间加了个 FiLM-layer，以 cond 为输入，输出 scale & shift。
+
+`predict_action`：输入 obs，输出 action。conditional_sample 输出的整个 metric，其中截断得到整个 action 的序列（长度=Ta，维度=Da）。
+
+`conditional_sample`：这个就是 action denoise 的过程。由 self.model=$\epsilon$ 求出当前 noise_trajectory 和 timestep 对应的 noise，然后减掉这个噪声（通过 diffuser 中封装好的库 scheduler.step 来实现）
