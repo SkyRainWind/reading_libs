@@ -44,4 +44,4 @@ DDPM 中的和 noise 有关的参数是 scheduler 的，最后选择了 Square C
 
 `predict_action`：输入 obs，输出 action。conditional_sample 输出的整个 metric，其中截断得到整个 action 的序列（长度=Ta，维度=Da）。
 
-`conditional_sample`：这个就是 action denoise 的过程。由 self.model=$\epsilon$ 求出当前 noise_trajectory 和 timestep 对应的 noise，然后减掉这个噪声（通过 diffuser 中封装好的库 scheduler.step 来实现）
+`conditional_sample`：这个就是 action denoise 的过程。由 self.model=$\epsilon$ 求出当前 noise_trajectory 和 timestep 对应的 noise，然后减掉这个噪声（通过 diffuser 中封装好的库 scheduler.step 来实现）。再次注意一下 self.model 就是 ConditionalUnet1D，结构同上面所说，可以发现这里就和 paper 中的 CNN-based 的方法大体吻合了（除了文章中并没有显式的体现这个 CNN 是 U-Net，embedding 大小是先减小后增大的）
