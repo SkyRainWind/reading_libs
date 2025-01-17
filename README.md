@@ -8,4 +8,6 @@
 - M3L visuo-tactile 的 baseline，基于 MAE 的视觉、触觉融合框架 [link](libs/M3L.md)
 - CLIP 多模态对比学习 [link](libs/CLIP.md)
 - 一些 fusion 的调研 for better leverage depth map [link](libs/bet.md)
-- diffusion policy [link](libs/dp.md)
+- diffusion policy 一种对 action 进行 denoise 的模仿学习方法 [link](libs/dp.md)
+- DINO 提出了一种框架，自监督自蒸馏模型用于学习图片表征 [link](libs/dino.md)
+- 3dtacdex visuo-tactile 在真机上的 deploy，使用 LEAP hand + PaXini Tactile Sensor 用于真机部署。
