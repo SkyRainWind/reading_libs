@@ -3,9 +3,14 @@ arxiv 2206.11251
 
 motivation：过去的 sota 很难处理多模式多种行为的策略，容易弄混。
 
-将 transformer 应用到生成 action 上。transformer 主要用于处理离散而非连续值，因此直接处理连续的 action 效果不好。将 action 利用 K-means cluster 到 $k$ 个离散的 bin 上，将一个 action 表示为 bin+连续的 offset，这样在使用 transformer 的时候，将先前若干个 observation 通过 encoder 之后再分别通过两个 projection head，就得到了 bin 和 offset 两个部分（其中 bin 为一个 distribution，而 offset 为一个 $|bin|\times |action|$ 的表格，当 sample 出一个 bin 之后，action 在对应的 bin 那一行上再 sample 一次就得到了对应的 action）。训练的时候也是容易的，将一个 action 拆成两部分之后训练对应的 projection head 即可。loss 的形式如下，只需要考虑在对应的 bin 中的 loss。
+将 transformer 应用到生成 action 上。transformer 主要用于处理离散而非连续值，因此直接处理连续的 action 效果不好。将 action 利用 K-means cluster 到 $k$ 个离散的 bin 上，将一个 action 表示为 bin+连续的 offset，这样在使用 transformer 的时候，将先前若干个 observation 通过 encoder 之后再分别通过两个 projection head，就得到了 bin 和 offset 两个部分（其中 bin 为一个 distribution，而 offset 为一个 $|bin|\times |action|$ 的表格，当 sample 出一个 bin 之后，action 在对应的 bin 那一行上再 sample 一次就得到了对应的 action）。训练的时候也是容易的，将一个 action 拆成两部分之后训练对应的 projection head 即可。loss 的形式如下，包含两个部分：根据 $o_i$ 预测对应的 action 的 bin，预测 bin 之后考虑在对应的 bin 中的 loss。
 
+![alt text](image-13.png)
 ![alt text](image-5.png)
+
+第一个 loss 的含义是一个改进版的交叉熵，用于训练 bin 的预测。交叉熵的意义在于，根据 $o_i$ 预测 action 的 bin，需要和作为 ground truth 的 $a_i$ 的 bin 一致。改进之后的交叉熵名为 Focal loss，通过添加 $(1-p)^{\gamma}$ 这一项，对于 $p$ 较小的情况梯度大，而 $p$ 大的情况梯度小，这样做的意义在于惩罚低概率的犯错。
+
+第二个 loss 用于训练残差的预测。在预测的 bin 下，通过 action 的残差和预测 table 的 bin 这一行的残差做 MSE 来训练残差。
 
 在 inference 的时候，我们就通过先前 $h$ 个 step 的 observation 输入到 transformer 后，分别通过两个头得到 bin 和 action，再通过 K-means decoder 就得到了最终的 action。
 
