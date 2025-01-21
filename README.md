@@ -11,3 +11,4 @@
 - diffusion policy 一种对 action 进行 denoise 的模仿学习方法 [link](libs/dp.md)
 - DINO 提出了一种框架，自监督自蒸馏模型用于学习图片表征 [link](libs/dino.md)
 - 3dtacdex visuo-tactile 在真机上的 deploy，使用 LEAP hand + PaXini Tactile Sensor 用于真机部署。
+- Diffusion BC 比 diffusion policy 早一点，提出了使用 diffusion 来生成 action 用于指导 il，和 dp 类似的想法。[link](libs/dbc.md)
