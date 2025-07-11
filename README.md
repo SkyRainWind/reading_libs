@@ -14,3 +14,4 @@
 - Diffusion BC 比 diffusion policy 早一点，提出了使用 diffusion 来生成 action 用于指导 il，和 dp 类似的想法。[link](libs/dbc.md)
 - ACT 使用 CVAE+Transformer 提取特征并生成 action，采用 temporal ensemble 的方式来提高时序一致性。[link](libs/ACT.md)
 - BEiT MAE前的一个使用transformer预训练处理图像的方式。[link](libs/beit.md)
+- sim-and-real co-train [link](libs/s&r-co-train.md)
