@@ -12,7 +12,7 @@ Sim-and-Real Co-Training: A Simple Recipe for  Vision-Based Robotic Manipulation
 
 学习目标：$\mathcal{L}_{\text{total}}(\theta; \mathcal{D}_{\text{real}}, \mathcal{D}_{\text{sim}}) = \alpha \cdot \mathcal{L}(\theta; \mathcal{D}_{\text{sim}}) + (1-\alpha) \cdot \mathcal{L}(\theta; \mathcal{D}_{\text{real}})$
 
-where $\mathcal{L}(\theta; \mathcal{D}) = \frac{1}{|\mathcal{D}|} \sum_{o \in \mathcal{D}} (-\log \pi(\mathbf{a}_i|\mathbf{o}_i))$ and $\alpha \in [0,1]$
+where $\mathcal{L}(\theta; \mathcal{D}) = \frac{1}{|\mathcal{D}|} \sum_{o \in \mathcal{D}} (-\log \pi(\mathbf{a}_i|\mathbf{o}_i))$ and $\alpha \in [0,1]$，是类 BC 状物
 
 $\alpha$ 是系数，一般取仿真环境数据的占比，这个系数对模型影响很大。
 
